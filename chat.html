@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Real-Time Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ username }}!</h1>
+        <div class="chat-window">
+            <div id="chat-messages">
+                <!-- Display previous messages -->
+                {% for message in messages %}
+                <div class="message {% if message.username == username %}user{% else %}other{% endif %}">
+                    <strong>{{ message.username }}:</strong> {{ message.message }}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="input-container">
+                <input type="text" id="message" placeholder="Type a message..." class="input-field">
+                <button onclick="sendMessage()" class="button">Send</button>
+                <button onclick="clearChat()" class="button clear-button">Clear Chat</button>
+            </div>
+        </div>
+    </div>
+    <!-- Pass the username to JavaScript -->
+    <script>
+        const username = "{{ username }}";
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
